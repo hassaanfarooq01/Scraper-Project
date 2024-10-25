@@ -7,13 +7,15 @@ services:
     volumes:
       - ./:/usr/src/app/
     ports:
-      - 8000:8000
+      - 8005:8000
     stdin_open: true
     tty: true
     env_file:
       - ./.env
     depends_on:
       - db
+      - redis
+
   db:
     image: postgres:15
     volumes:
@@ -28,11 +30,22 @@ services:
   redis:
     image: redis:7
     ports:
-      - 6379:6379
+      - 6380:6379
 
-  celery:
+  celery_worker:
     build: .
-    command: celery -A your_project_name worker --loglevel=info
+    command: celery -A core worker --loglevel=INFO
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - db
+      - web
+    env_file:
+      - ./.env
+
+  celery-beat:
+    build: .
+    command: celery -A core beat --loglevel=INFO
     volumes:
       - ./:/usr/src/app/
     depends_on:
