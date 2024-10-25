@@ -52,13 +52,8 @@ def scrape_products_for_brand(brand_name, *args, **kwargs):
     encoded_search_term = urllib.parse.quote_plus(brand_name)
     brand_url = f"https://www.amazon.com/s?k={encoded_search_term}"
 
-    # Brand.objects.update(scraping_active=False)
 
     try:
-        # brand, _ = Brand.objects.get_or_create(name=brand_name)
-        # brand.scraping_active = True
-        # brand.save()
-
         driver.get(brand_url)
         driver.refresh()
         time.sleep(3)
@@ -124,9 +119,6 @@ def scrape_products_for_brand(brand_name, *args, **kwargs):
                                 'image': image_url
                             }
                         )
-
-        brand.scraping_active = False
-        brand.save()
 
     except Exception as e:
         print(f"Error during scraping for {brand_name}: {e}")

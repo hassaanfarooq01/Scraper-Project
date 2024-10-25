@@ -77,7 +77,7 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 CELERY_BEAT_SCHEDULE = {
     'scrape-all-brands-4-times-a-day': {
         'task': 'product_scraper.tasks.scrape_all_brands_task',
-        'schedule': crontab(minute='*'),  # Every 6 hours
+        'schedule': crontab(minute=0, hour='*/6'),  
     },
 }
 

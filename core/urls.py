@@ -3,5 +3,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('products/', include('product_scraper.urls')),  # Add this line
+    path('products/', include('product_scraper.urls')),  
 ]
